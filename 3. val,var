@@ -1,0 +1,347 @@
+package com.example.myapplication
+
+/*
+//val과 var의 차이
+val data1=10    //val은 value 즉 상수
+var data2=10    //var는 variable 즉 변수
+
+fun main(){
+    //data1=20  //상수는 값 변경 불가
+    data2=20
+}
+*/
+
+/*
+//최상위에 선언한 변수나 클래스의 멤버 변수는 선언과 동시에 초깃값을 할당해야함
+//val data1:Int //오류
+val data2=10
+
+fun someFun(){
+    val data3:Int
+    //println("data3 : $data3") //오류
+    data3=10
+    println("Data3 : $data3")
+}
+
+class User{
+    //val data4: Int    //오류
+    val data5: Int=10
+}
+*/
+
+/*
+//초기화 미루기
+// lateinit
+// lateinit은 var 키워드로 선언한 변수에만 사용 가능
+// int, Long, Short, Double, Float, Boolean, Byte 타입에는 사용 불가
+lateinit var date3: String
+
+//lazy
+//변수 선언문 뒤에 by lazy { } 형식으로 선언
+//변수가 최초로 이용 되는 순간 { }부분이 자동 실행 되어 그 결괏값이 변수의 초깃값으로 할당
+//{ }부분이 여러 줄로 작성 된다면 마지막 줄의 실행 결과가 변수의 초깃값이 됌
+val data4: Int by lazy{
+    println("in lazy.......")
+    10
+}
+
+fun main() {
+    println("in main.......")
+    println(data4 + 10)
+    println(data4 + 10)
+}
+ */
+
+/*
+//데이터 타입
+//코틀린의 모든 변수는 객체이다.
+fun someFun(){
+    var data1: Int=10
+    var data2: Int?=null    //Int는 기초 데이터 타입이 아니기 때문에 null 대입 가능
+
+    data1=data1+10
+    data1=data1.plus(10)    //객체의 메서드 이용 가능
+}
+
+//기초 타입 객체
+//Int, Short, Long, Double, Float, Byte, Boolean
+val a1: Byte=0B00001011
+val a2: Int=123
+val a3: Short=123
+val a4: Long=10L
+val a5: Double=10.0
+val a6: Float=10.0f
+val a7: Boolean =true
+
+//문자와 문자열
+//Char, String
+val a: Char='a'
+
+fun main(){
+    val str1="Hello \n World"
+    val str2="""
+            Hello
+            Hello
+    """         //"""뒤에 .trimIndent()를 쓰면 문자열 앞에 공백을 없애준다.
+    println("str1 : $str1")
+    println("str2 : $str2")
+}
+ */
+
+/*
+//문자열 템플릿
+//String 타입의 데이터에 변숫값이나 어떤 연산식의 결괏값을 포함해야 할 때, $ 기호를 이용한다.
+fun main(){
+    fun sum(no: Int):Int{
+        var sum=0
+        for(i in 1..no){
+            sum+=i
+        }
+        return sum
+    }
+
+val name: String = "kkang"
+println("name : $name, sum : ${sum(10)}, plus : ${10+20}")
+}
+ */
+
+/*
+//타입 설정
+//Any 타입 - 모든 타입 가능
+//Any는 코틀린에서 최상위 클래스로, 모든 코틀린의 클래스는 Any의 하위 클래스이다. 따라서 모든 타입의 데이터 할당 가능
+val data1: Any=10
+val data2: Any="hello"
+
+class User
+val data3:Any=User()
+
+//Unit 타입 - 반환문이 없는 함수
+//Unit은 특수한 상황 표현을 위해 사용
+val data4: Unit=Unit
+
+//반환문이 없는 함수(반환 타입을 생략할 시, 자동으로 Unit적용)
+fun some(): Unit{
+    println(10+20)
+}
+
+//Nothing 타입 - nul이나 예외를 반환하는 함수
+val dat5: Nothing? =null
+//Nothing으로 선언한 변수는 null만 대입할 수 있다. => 항상 null만 반환하는 함수, 예외를 던지는 함수에 사용 가능
+fun some1(): Nothing? {
+    return null
+}
+fun some2(): Nothing{
+    throw Exception()
+}
+
+//null 허용과 불허용 => 변수를 선언할 때 타입 뒤에 물음표(?)를 추가하면 허용, 없으면 불허용으로 간주한다.
+var data6:Int=10
+//data6=null    // ?없어서 오류
+
+var data7: Int? =10
+fun main(){
+    data7 = null
+}
+ */
+
+/*
+//함수 선언하기
+//코틀린에서 함수를 선언하려면 fun이라는 키워드를 이용한다.(반환 타입 선언 가능, 생략시 Unit타입 적용)
+fun some1(data1: Int): Int{
+    return data1 * 10
+}
+//함수의 매개변수에는 var, val 키워드 사용 불가, val이 자동으로 적용됌
+fun some2(data1: Int) {
+    //ata1 = 20 //오류
+}
+//함수의 매개변수에 기본값을 선언할 수 있다. 기본 값이 있으면 매개변수에 인자를 전달하지 않아도 됌
+fun main(){
+    fun some3(data1: Int, data2: Int=10):Int{
+        return data1 * data2
+    }
+    println(some3(10))
+    println(some3(10,20))
+}
+//함수의 매개변수가 여러 개면 호출할 때, 전달한 인자를 순서대로 할당한다.
+fun some4(data1: Int, data2: Int):Int{
+    return data1 * data2
+}
+println(some4(10,20))
+//호출할 때 매개변수명을 지정하면 매개변숫값의 순서를 바꿔도 됌 => 명명된 매개변수
+some4(data2=20,data1=10)
+ */
+
+/*
+//컬렉션 타입
+//Array - 배열 표현
+//Array 클래스의 생성장에서 첫 번째 매개변수는 배열의 크기, 두번째 매개변수는 초깃값
+//배열의 타입은 제네릭으로 표현(이용하는 곳에서 타입을 지정)
+val data1: Array<Int> = Array(3,{0})    //Array<String>으로 지정시 문자열 배열
+
+//배열의 데이터에 접근할 때는 대괄호([]), set(), get()함수를 이용 가능
+fun main() {
+    val data1: Array<Int> = Array(3,{0})
+    data1[0]=10
+    data1[1]=20
+    data1.set(2,30)
+
+    println(
+        """
+    array size : ${data1.size}
+    array data : ${data1[0]}, ${data1[1]}, ${data1.get(2)}
+    """
+    )
+}
+ */
+
+/*
+//기초 타입의 배열(Array를 사용하지 않고 배열을 나타내는 방법)
+//BooleanArray, ByteArray, CharArray, DoubleArray, FloatArray, IntArray, LongArray, ShortArray 클래스
+val data2: IntArray = IntArray(3,{0})
+val data3: BooleanArray = BooleanArray(3,{false})
+
+//arrayOf()는 배열을 선언할 때, 값 할당 가능
+fun main(){
+    val data4=arrayOf<Int>(10,20,30)
+    println(
+        """
+    array size : ${data4.size}
+    array data : ${data4[0]}, ${data4[1]}, ${data4.get(2)}
+        """
+    )
+}
+//arryOf() 함수도 기초 타입을 대상으로하는 함수 제공
+//booleanArrayOf(), byteArrayOf(), charArrayOf(), doubleArrayOf(), floatArrayOf(), intArrayOf(), longArrayOf(), shortArrayOf()
+val data5 = intArrayOf(10,20,30)
+val data6 = booleanArrayOf(true,false,true)
+ */
+
+/*
+//List, Set, Map
+//List : 순서가 있는 데이터의 집합으로 데이터의 중복을 허용함
+//Set : 순서가 없으며 데이터의 중복을 허용하지 않음
+//Map: 키와 값으로 이루어진 데이터 집합으로 순서가 없으며 키의 중복은 허용 하지 않는다.
+
+fun main(){
+    var list = listOf<Int>(10,20,30)
+    println(
+        """
+    list size : ${list.size}
+    array data : ${list[0]}, ${list.get(1)}, ${list.get(2)}
+        """
+    )
+}
+
+ */
+
+/*
+//mutableList는 mutableListOf() 함수로 만들며 add(), set() 함수 이용 가능
+fun main() {
+    var mutableList= mutableListOf<Int>(10,20,30)
+    mutableList.add(3, 40)
+    mutableList.set(0, 50)
+    println(
+        """
+    list size : ${mutableList.size}
+    list data : ${mutableList[0]}, ${mutableList[1]}, ${mutableList.get(2)},${mutableList.get(3)}
+        """
+    )
+}
+ */
+
+/*
+//map 사용방법
+fun main(){
+    var map= mapOf<String, String>(Pair("one", "hello"), "two" to "world")
+    println(
+        """
+    map size : ${map.size}
+    map data : ${map.get("one")}, ${map.get("two")}
+        """
+    )
+}
+ */
+
+/*
+//조건문과 반복문
+//if~else문, 다른 프로그래밍 언어들과의 큰 차이점은 없다. 하지만 표현식으로도 사용 가능하다.
+fun main(){
+    var data=10
+    val result = if(data>0){
+        println("data>0")
+        true    //참일 때 반환 값
+    }else{
+        println("data <= 0")
+        false   //거짓일 때 반환
+    }
+    println(result)
+}
+ */
+
+/*
+//when
+fun main(){
+    var data: Any=10
+    when(data){
+        is String -> println("data is String")
+        20, 30 -> println("data is 20 or 30")
+        in 1..10 -> println("data is 1..10")
+        else -> println("data is not valid")
+    }
+}
+ */
+
+/*
+//when은 데이터를 명시하지 않고 조건만 명시할 수 있다.
+fun main(){
+    var data = 10
+    when{
+        data <=0 -> println("data is <=0")
+        data > 100 -> println("data is > 100")
+        else -> println("data is valid")
+    }
+}
+ */
+
+/*
+//when문을 표현식으로도 사용 가능
+fun main(){
+    var data = 10
+    var result =when{
+        data <=0 -> "data is <=0"
+        data > 100 -> "data is > 100"
+        else -> "data is valid"
+    }
+    println(result)
+}
+ */
+
+//반복문 for와 while
+//for (i in 1..10) { ... }      1부터 10까지 1씩 증가
+//for (i in 1 until 10) { ... }     1부터 9까지 1씩 증가(10은 미포함)
+//for (i in 2..10 step 2) { ... }   2부터 10까지 2씩 증가
+//for (i in 10 downTo 1) { ... }    10부터 1까지 1씩 감소
+
+/*
+//데이터의 개수만큼 반복 시키는 방법(indices는 인덱스를 가져옴)
+fun main(){
+    var data = arrayOf<Int>(10,20,30)
+    for(i in data.indices){
+        print(data[i])
+        if(i !== data.size -1) print(",")
+    }
+}
+ */
+
+/*
+//인덱스와 데이터를 모두 가져오는 withIndex()함수
+fun main(){
+    var data = arrayOf<Int>(10,20,30)
+    for ((index, value) in data.withIndex()){
+        print(value)
+        if(index !== data.size -1) print(",")
+    }
+}
+ */
+
+//while문은 동일함
